@@ -1,0 +1,25 @@
+# Configuración de despliegue del backend en Render (plan gratuito).
+# Al crear un "Blueprint" en Render apuntando a este repo, se usa este archivo.
+services:
+  - type: web
+    name: sistema-autoevaluacion-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      # Los siguientes secretos se configuran en el panel de Render (no aquí):
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false

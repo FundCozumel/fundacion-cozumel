@@ -1,0 +1,42 @@
+# ─────────────────────────────────────────────────────────────
+# Secretos — NUNCA subir a GitHub
+# ─────────────────────────────────────────────────────────────
+.env
+.env.local
+.env*.local
+backend/.env
+frontend/.env.local
+
+# ─────────────────────────────────────────────────────────────
+# Frontend (Next.js / Node)
+# ─────────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+build/
+dist/
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+
+# ─────────────────────────────────────────────────────────────
+# Backend (Python / FastAPI)
+# ─────────────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# ─────────────────────────────────────────────────────────────
+# Sistema operativo / editor
+# ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/*
+!.vscode/extensions.json
