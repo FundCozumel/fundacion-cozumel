@@ -6,8 +6,8 @@ Stack de despliegue (todo en plan gratuito):
 
 | Componente | Servicio | URL final (ejemplo) |
 |---|---|---|
-| Frontend (Next.js) | **Vercel** | `https://sistema-cozumel.vercel.app` |
-| Backend (FastAPI) | **Render** | `https://sistema-autoevaluacion-api.onrender.com` |
+| Frontend (Next.js) | **Vercel** | `https://fundacion-cozumel.vercel.app` |
+| Backend (FastAPI) | **Render** | `https://fundacion-cozumel-api.onrender.com` |
 | Base de datos + Auth | **Supabase** | (ya existe) |
 
 > ⚠️ El backend en Render (plan free) se **duerme tras 15 min** sin uso. La primera petición después de dormir tarda ~30-60s en responder; luego va normal.
