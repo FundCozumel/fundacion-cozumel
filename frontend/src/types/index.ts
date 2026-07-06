@@ -103,7 +103,7 @@ export const TIPO_CUESTIONARIO_LABEL: Record<TipoCuestionario, string> = {
   pre: "Pre",
   post: "Post",
   evaluacion_modulo: "Evaluación de módulo",
-  evaluacion_evento: "Evaluación de evento",
+  evaluacion_evento: "Evaluación de salida",
 };
 
 export const TIPO_RESPUESTA_LABEL: Record<TipoRespuesta, string> = {
