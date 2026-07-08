@@ -759,7 +759,27 @@ export default function ImportarPage() {
       );
     }
 
-    // 3b. Cargar respuestas por fila (en paralelo, por lotes)
+    // 3b. Registrar asistencia en la actividad seleccionada. Sin esto, los
+    // participantes importados no aparecen en los filtros por programa/actividad
+    // (que se basan en la tabla asistencias).
+    if (actividadFija) {
+      const pids = [...new Set([...pidPorValor.values()].filter((x): x is string => Boolean(x)))];
+      if (pids.length) {
+        const { error: errAsis } = await supabase.from("asistencias").upsert(
+          pids.map((pid) => ({
+            participante_id: pid,
+            actividad_id: actividadFija,
+            estatus: "asistio",
+          })),
+          { onConflict: "participante_id,actividad_id" }
+        );
+        if (errAsis) {
+          errores.push({ fila: 1, motivo: `No se pudo registrar la asistencia: ${errAsis.message}` });
+        }
+      }
+    }
+
+    // 3c. Cargar respuestas por fila (en paralelo, por lotes)
     let okResp = 0;
     const total = archivo.filas.length;
     setProgreso({ hecho: 0, total });
@@ -825,7 +845,12 @@ export default function ImportarPage() {
     setResultado({
       ok: okResp,
       errores,
-      detalle: `Cuestionario "${cuestForm.nombre.trim()}" creado con ${preguntasInfo.length} preguntas. ${okResp} respuestas cargadas.`,
+      detalle:
+        `Cuestionario "${cuestForm.nombre.trim()}" creado con ${preguntasInfo.length} preguntas. ` +
+        `${okResp} respuestas cargadas.` +
+        (actividadFija
+          ? " Se registró la asistencia de los participantes en la actividad."
+          : " Sin actividad seleccionada: los participantes no quedan ligados a la actividad/programa en los filtros."),
     });
   }
 
@@ -1059,6 +1084,10 @@ export default function ImportarPage() {
                   </option>
                 ))}
               </select>
+              <p className="text-[10px] text-gray-400 mt-1">
+                Si eliges actividad, se registra la asistencia de cada participante y podrás
+                filtrarlos por programa/actividad.
+              </p>
             </div>
           </div>
           <div>
